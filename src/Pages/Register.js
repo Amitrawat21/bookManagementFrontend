@@ -54,7 +54,7 @@ const Register = () => {
       return;
     }
   
-    const data = await fetch("http://localhost:8000/user/register", {
+    const data = await fetch("https://backendbookmanagement-1.onrender.com/user/register", {
       method: "POST",
       headers: {
         "content-type": "application/Json",

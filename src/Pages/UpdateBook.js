@@ -30,7 +30,7 @@ const UpdateBook = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:8000/book/updatebook/${id}`,
+        `https://backendbookmanagement-1.onrender.com/book/updatebook/${id}`,
         {
           bookname,
           price,

@@ -11,7 +11,7 @@ const Cards = ( {item , index , booksData , setBooksData }) =>{
     const deleteBook = async (id) => {
       try {
         // Make DELETE request to API endpoint
-        await axios.delete(`http://localhost:8000/book/deletebook/${id}`);
+        await axios.delete(`https://backendbookmanagement-1.onrender.com/book/deletebook/${id}`);
   
         // Update state to remove the deleted book
         setBooksData((prevData) => prevData.filter((book) => book._id !== id));
