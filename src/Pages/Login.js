@@ -50,12 +50,16 @@ const Login = ({ setIsLoggedIn, isLoggedIn }) => {
       const res = await data.json();
 
       if (res.status === 201) {
-        alert("user login successfully");
+        toast.success("user login successfully");
         // localStorage.setItem("userdatatoken" , res.result.token)
         useCon.setShow(res); // Update context value using set method
         console.log(useCon.show, "this is data");
         // corrected typo here
-        history(`/dashboard/${res.userValid.name}`);
+        setTimeout(()=>{
+          history(`/dashboard/${res.userValid.name}`);
+
+        } , 1500)
+      
 
         setInput({ ...input, email: "", password: "" });
       } else {
@@ -113,7 +117,7 @@ const Login = ({ setIsLoggedIn, isLoggedIn }) => {
           </form>
         </div>
       </section>
-      <ToastContainer />
+      <ToastContainer autoClose  = {1300} />
     </>
   );
 };

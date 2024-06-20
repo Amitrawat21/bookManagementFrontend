@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const UpdateBook = () => {
   const location = useLocation(); // Get location object
@@ -45,8 +48,14 @@ const UpdateBook = () => {
       console.log(res, "datata");
 
       if (res.status === 200) {
-        alert("edit book sucessfully sucessfully");
-        history("/books");
+      
+        const toastId = toast.success("Edit book successfully");
+
+        toast.onChange((payload) => {
+          if (payload.id === toastId && payload.status === "removed") {
+            history("/books");
+          }
+        })
       }
     } catch (error) {
       console.error("Error registering user:", error);
@@ -55,12 +64,12 @@ const UpdateBook = () => {
 
   return (
     <div
-      className="bg-dark d-flex justify-content-center align-items-center"
-      style={{ minHeight: "91.2vh" }}
+      className=" d-flex justify-content-center align-items-center"
+      style={{ minHeight: "100vh" ,  backgroundColor : "#9932CC" }}
     >
       <div
         className="container p-5"
-        style={{ width: "70%", backgroundColor: "gray" }}
+        style={{ width: "70%", backgroundColor: "white" , borderRadius : "30px" }}
       >
         {" "}
         {/* Adjusted container width */}
@@ -115,10 +124,11 @@ const UpdateBook = () => {
             onChange={setVal}
           />
         </div>
-        <button className="btn-btn-success" onClick={editData}>
+        <button className="btn-btn-success" style={{borderRadius : "20px" , padding : "5px"}} onClick={editData}>
           submit to update
         </button>
       </div>
+      <ToastContainer autoClose =  {1200} />
     </div>
   );
 };

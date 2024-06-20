@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import "./mix.css";
-import { NavLink } from "react-router-dom";
+import { NavLink , useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // import { ToastContainer, toast } from 'react-toastify';
 
 const Register = () => {
+
+  const history = useNavigate()
   const [passShow, setPassShow] = useState(false);
   const [CpassShow, setCPassShow] = useState(false);
 
@@ -67,14 +69,22 @@ const Register = () => {
     const res = await data.json();
   
     if (res.status === 201) {
+
       toast.success("user registration successfully");
+       setTimeout(()=>{
+         history("/")
+       } , 1500)
+     
       setInput({
         ...input,
         name: "",
         email: "",
         password: "",
         cpassword: "",
+
+
       });
+
     } else if (res.error === "this email already exits") {
       toast.error("Email already exists");
     }
@@ -162,7 +172,7 @@ const Register = () => {
           </form>
         </div>
       </section>
-      <ToastContainer />
+      <ToastContainer autoClose =  {1200} />
     </>
   );
 };

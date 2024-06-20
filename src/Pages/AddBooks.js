@@ -67,11 +67,12 @@ const AddBooks = () => {
     <>
      <div>
       <Navbar />
+
       <div
-        className="bg-dark d-flex justify-content-center align-items-center"
-        style={{ minHeight: "91.2vh" }}
+        className=" d-flex justify-content-center align-items-center"
+        style={{ minHeight: "91.2vh" , backgroundColor : "#9932CC" }}
       >
-        <div className="container  p-5" style={{ width: "70%" , backgroundColor : "gray" , borderRadius : "50px" }}>
+        <div className="container  p-5" style={{ width: "70%" , backgroundColor : "white" , borderRadius : "50px" }}>
           {" "}
           {/* Adjusted container width */}
           <div className="mb-3">
@@ -142,7 +143,7 @@ const AddBooks = () => {
               onChange={setVal}
             />
           </div>
-          <button className="btn-btn-success" onClick={addUserdata}>
+          <button  style={{borderRadius : "20px" , padding : "10px" , backgroundColor : "#00FFFF"}} onClick={addUserdata}>
             submit
           </button>
         </div>

@@ -28,13 +28,13 @@ const Books = () => {
   return (
     <div className="">
       <Navbar />
-      <div className="bg-dark" style={{ minHeight: "91.5vh" }}>
-        <div className="d-flex justify-content-center align-item-center ">
-          <h4 className="text-white my-5">BOOK SECTION</h4>
+      <div  style={{ minHeight: "91.5vh"}}>
+        <div className="d-flex justify-content-center align-item-center " >
+          <h4 className=" my-5" style={{color : "black" , fontSize : "30px"}}>BOOK SECTION</h4>
           
         </div>
         {
-            Data.length>0?<BookSection data = {Data}/> : <h1 className="text-white" style={{textAlign: "center", background : "gray"}}>Pleasee add book</h1>
+            Data.length>0?<BookSection data = {Data}/> : <h1  style={{textAlign: "center"}}>Pleasee add book</h1>
 
             
         }
