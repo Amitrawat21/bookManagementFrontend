@@ -3,6 +3,9 @@ import "./mix.css";
 import { NavLink , useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+
 
 // import { ToastContainer, toast } from 'react-toastify';
 
@@ -11,6 +14,7 @@ const Register = () => {
   const history = useNavigate()
   const [passShow, setPassShow] = useState(false);
   const [CpassShow, setCPassShow] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [input, setInput] = useState({
     name: "",
@@ -29,6 +33,8 @@ const Register = () => {
   };
 
   const addUserdata = async (e) => {
+    setLoading(true);
+
     e.preventDefault();
     const { name, email, password, cpassword } = input;
     if (name === "") {
@@ -53,6 +59,7 @@ const Register = () => {
       toast.error("password and confirm password do not match");
       return;
     }
+    
   
     const data = await fetch("https://backendbookmanagement-1.onrender.com/user/register", {
       method: "POST",
@@ -69,7 +76,7 @@ const Register = () => {
     const res = await data.json();
   
     if (res.status === 201) {
-
+        setLoading(false);
       toast.success("user registration successfully");
        setTimeout(()=>{
          history("/")
@@ -95,6 +102,25 @@ const Register = () => {
     <>
       <section>
         <div className="form_data">
+        {loading && (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            backgroundColor: "rgba(255, 255, 255, 0.8)",
+            zIndex: 1000,
+          }}
+        >
+          please wait ... &nbsp;
+          <CircularProgress />
+        </Box>
+      )}
           <div className="form_heading">
             <h1>SIGN UP</h1>
             <p style={{ textAlign: "center" }}>fill all the details</p>
