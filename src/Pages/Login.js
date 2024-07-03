@@ -28,7 +28,7 @@ const Login = ({ setIsLoggedIn, isLoggedIn }) => {
   };
 
   const loginUser = async (e) => {
-    setLoading(true);
+   
     e.preventDefault();
     const { email, password } = input;
 
@@ -41,6 +41,7 @@ const Login = ({ setIsLoggedIn, isLoggedIn }) => {
     } else if (password.length < 6) {
       toast.error("password must me 6 char");
     } else {
+      setLoading(true);
       const data = await fetch("https://backendbookmanagement-1.onrender.com/user/login", {
         method: "POST",
         headers: {
@@ -69,6 +70,7 @@ const Login = ({ setIsLoggedIn, isLoggedIn }) => {
         setInput({ ...input, email: "", password: "" });
       } else {
         toast.error("user password or email invalid");
+        setLoading(false);
       }
     }
   };

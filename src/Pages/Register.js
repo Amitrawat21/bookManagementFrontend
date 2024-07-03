@@ -1,17 +1,13 @@
 import React, { useState } from "react";
 import "./mix.css";
-import { NavLink , useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
-
-// import { ToastContainer, toast } from 'react-toastify';
-
 const Register = () => {
-
-  const history = useNavigate()
+  const history = useNavigate();
   const [passShow, setPassShow] = useState(false);
   const [CpassShow, setCPassShow] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -33,94 +29,108 @@ const Register = () => {
   };
 
   const addUserdata = async (e) => {
-    setLoading(true);
-
     e.preventDefault();
+
+
     const { name, email, password, cpassword } = input;
     if (name === "") {
       toast.error("please enter your name");
+
       return;
     } else if (email === "") {
       toast.error("please enter your email");
+     
       return;
     } else if (!email.includes("@")) {
       toast.error("enter valid email");
+     
       return;
     } else if (password === "") {
       toast.error("please enter your password");
+     
       return;
     } else if (password.length < 6) {
       toast.error("password must be at least 6 characters");
+    
       return;
     } else if (cpassword === "") {
       toast.error("please enter your confirm password");
+     
       return;
     } else if (password !== cpassword) {
       toast.error("password and confirm password do not match");
+     
       return;
     }
-    
-  
-    const data = await fetch("https://backendbookmanagement-1.onrender.com/user/register", {
-      method: "POST",
-      headers: {
-        "content-type": "application/Json",
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        password,
-        cpassword,
-      }),
-    });
-    const res = await data.json();
-  
-    if (res.status === 201) {
-        setLoading(false);
-      toast.success("user registration successfully");
-       setTimeout(()=>{
-         history("/")
-       } , 1500)
-     
-      setInput({
-        ...input,
-        name: "",
-        email: "",
-        password: "",
-        cpassword: "",
 
-
+    try {
+      setLoading(true);
+      const response = await fetch("https://backendbookmanagement-1.onrender.com/user/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          cpassword,
+        }),
       });
 
-    } else if (res.error === "this email already exits") {
-      toast.error("Email already exists");
+      const res = await response.json();
+
+      if (res.status === 201) {
+        setLoading(false);
+        toast.success("user registration successfully");
+        setTimeout(() => {
+          history("/");
+        }, 1500);
+
+        setInput({
+          name: "",
+          email: "",
+          password: "",
+          cpassword: "",
+        });
+      } else if (res.error === "this email already exits") {
+        toast.error("Email already exists");
+       
+     
+      }
+    } catch (error) {
+   
+      toast.error("Something went wrong. Please try again later.");
+    }
+    finally{
+      setLoading(false);
+
     }
   };
-  
 
   return (
     <>
       <section>
         <div className="form_data">
-        {loading && (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            zIndex: 1000,
-          }}
-        >
-          please wait ... &nbsp;
-          <CircularProgress />
-        </Box>
-      )}
+          {loading && (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100vh",
+                position: "fixed",
+                top: 0,
+                left: 0,
+                width: "100%",
+                backgroundColor: "rgba(255, 255, 255, 0.8)",
+                zIndex: 1000,
+              }}
+            >
+              please wait ... &nbsp;
+              <CircularProgress />
+            </Box>
+          )}
           <div className="form_heading">
             <h1>SIGN UP</h1>
             <p style={{ textAlign: "center" }}>fill all the details</p>
@@ -145,7 +155,7 @@ const Register = () => {
                 type="email"
                 name="email"
                 id="email"
-                placeholder="enter your email addresss"
+                placeholder="enter your email address"
                 value={input.email}
                 onChange={setVal}
               />
@@ -193,12 +203,12 @@ const Register = () => {
               Sign up
             </button>
             <p>
-              Already have an account ? <NavLink to="/">Log In</NavLink>{" "}
+              Already have an account? <NavLink to="/">Log In</NavLink>
             </p>
           </form>
         </div>
       </section>
-      <ToastContainer autoClose =  {1200} />
+      <ToastContainer autoClose={1200} />
     </>
   );
 };
